@@ -1,24 +1,7 @@
-# from base image node
-ARG NODE_VERSION=8.11-slim
-FROM node:$NODE_VERSION
+#This is a sample Image 
+FROM ubuntu 
+MAINTAINER demousr@gmail.com 
 
-LABEL "about"="This file is just am example to demonstarte the LABEL"
-
-ENV workdirectory /usr/node
-
-WORKDIR $workdirectory
-WORKDIR app
-
-COPY package.json .
-
-RUN ls -ll &&\
-    npm install
-
-ADD index.js .
-
-RUN ls -l
-
-EXPOSE 3070
-
-# command executable and version
-ENTRYPOINT ["node"]
+RUN apt-get update 
+RUN apt-get install –y nginx 
+CMD [“echo”,”Image created”] 
