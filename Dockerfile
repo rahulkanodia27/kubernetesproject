@@ -1,12 +1,24 @@
-FROM centos:8
-MAINTAINER rahulkanodia27@gmail.com
-RUN yum install -y httpd
-RUN yum install -y zip
-RUN yum install -y unzip
-ADD https://www.free-css.com/assets/files-css-templates/download/page258/loxury.zip /var/www/html/
-WORKDIR /var/www/thml
-RUN unzip loxury.zip
-RUN cp -rvf loxury/* .
-RUN rm -rf loxury loxury.zip
-CMD ["/usr/sbin/httpd", "-D", "FOREGROUND"]
-EXPOSE 80
+# from base image node
+ARG NODE_VERSION=8.11-slim
+FROM node:$NODE_VERSION
+
+LABEL "about"="This file is just am example to demonstarte the LABEL"
+
+ENV workdirectory /usr/node
+
+WORKDIR $workdirectory
+WORKDIR app
+
+COPY package.json .
+
+RUN ls -ll &&\
+    npm install
+
+ADD index.js .
+
+RUN ls -l
+
+EXPOSE 3070
+
+# command executable and version
+ENTRYPOINT ["node"]
